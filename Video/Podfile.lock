@@ -1,0 +1,19 @@
+PODS:
+  - FLAnimatedImage (1.0.8)
+  - PINCache (2.0)
+  - PINRemoteImage (1.1.2):
+    - FLAnimatedImage (>= 1.0)
+    - PINCache (>= 2.0)
+  - XCDYouTubeKit (2.2.0)
+
+DEPENDENCIES:
+  - PINRemoteImage (~> 1.1)
+  - XCDYouTubeKit
+
+SPEC CHECKSUMS:
+  FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
+  PINCache: ca953ba93ce1edde056fdd99121ee65b295a08c9
+  PINRemoteImage: 0696e5f679deabf2e2ddfb57085fb978ca51bfc3
+  XCDYouTubeKit: 920ff5dfdf37f0f41b19610c5270b2ed23b05b13
+
+COCOAPODS: 0.38.2
