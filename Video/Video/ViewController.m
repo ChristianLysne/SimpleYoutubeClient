@@ -71,6 +71,7 @@
                     Video *video = [Video new];
                     video.videoID = [dic objectForKey:@"id"];
                     video.title = [dic valueForKeyPath:@"snippet.title"];
+                    video.videoDescription = [dic valueForKeyPath:@"snippet.description"];
                     video.imageURL = [NSURL URLWithString:[dic valueForKeyPath:@"snippet.thumbnails.high.url"]];
                     
                     [self.videos addObject:video];
@@ -96,12 +97,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CGRectGetHeight(self.view.frame)/2.5;
+    return CGRectGetHeight(self.view.frame)/3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell" forIndexPath:indexPath];
+    cell.layer.shouldRasterize = YES;
+    cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     
     Video *video = [self.videos objectAtIndex:indexPath.row];
     [cell.mainImageView pin_setImageFromURL:video.imageURL];
@@ -123,7 +126,7 @@
     
 }
 
--(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [self.tableView reloadData];
 }
 

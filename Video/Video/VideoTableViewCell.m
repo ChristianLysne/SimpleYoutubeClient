@@ -26,4 +26,13 @@
     [super prepareForReuse];
 }
 
+- (IBAction)playButtonTapped:(id)sender {
+    
+}
+
+- (IBAction)infoButtonTapped:(id)sender {
+    
+}
+
+
 @end

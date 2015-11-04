@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSString *videoID;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *videoDescription;
 @property (nonatomic, copy) NSURL *imageURL;
 
 @end
