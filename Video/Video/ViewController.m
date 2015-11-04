@@ -24,11 +24,23 @@ NSString *const kDetailsSegue = @"DetailsSegue";
 
 @implementation ViewController
 
+-(void)handlePressedOpenDetailsFromCell:(UITableViewCell *)cell
+{
+    [self performSegueWithIdentifier:kDetailsSegue sender:[self videoForCell:cell]];
+}
+
+-(Video *)videoForCell:(UITableViewCell *)cell {
+    NSInteger index = [self.tableView indexPathForCell:cell].row;
+    return self.videos[index];
+}
+
 -(void)handlePressedOpenVideoFromCell:(UITableViewCell *)cell
 {
-    NSInteger index = [self.tableView indexPathForCell:cell].row;
-    Video *video = self.videos[index];
-    [self performSegueWithIdentifier:kDetailsSegue sender:video];
+    XCDYouTubeVideoPlayerViewController *videoPlayerViewController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:[self videoForCell:cell].videoID];
+    
+    [self presentViewController:videoPlayerViewController animated:YES completion:^{
+        [videoPlayerViewController.moviePlayer play];
+    }];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

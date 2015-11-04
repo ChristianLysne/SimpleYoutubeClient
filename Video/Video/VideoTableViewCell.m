@@ -33,7 +33,9 @@
 }
 
 - (IBAction)infoButtonTapped:(id)sender {
-    
+    if([self.delegate respondsToSelector: @selector(handlePressedOpenDetailsFromCell:)]){
+        [self.delegate handlePressedOpenDetailsFromCell:self];
+    }
 }
 
 

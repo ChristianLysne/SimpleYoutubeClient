@@ -11,6 +11,7 @@
 @protocol VideoTableViewCellDelegate <NSObject>
 
 -(void)handlePressedOpenVideoFromCell:(UITableViewCell *)cell;
+-(void)handlePressedOpenDetailsFromCell:(UITableViewCell *)cell;
 
 @end
 
