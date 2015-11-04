@@ -27,7 +27,9 @@
 }
 
 - (IBAction)playButtonTapped:(id)sender {
-    
+    if([self.delegate respondsToSelector: @selector(handlePressedOpenVideoFromCell:)]){
+        [self.delegate handlePressedOpenVideoFromCell:self];
+    }
 }
 
 - (IBAction)infoButtonTapped:(id)sender {

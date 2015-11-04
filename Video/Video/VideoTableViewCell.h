@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol VideoTableViewCellDelegate <NSObject>
+
+-(void)handlePressedOpenVideoFromCell:(UITableViewCell *)cell;
+
+@end
+
 @interface VideoTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
+@property(nonatomic,weak)id <VideoTableViewCellDelegate> delegate;
 
 @end

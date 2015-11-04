@@ -11,8 +11,11 @@
 #import "Video.h"
 #import <PINRemoteImage/UIImageView+PINRemoteImage.h>
 #import <XCDYouTubeKit/XCDYouTubeKit.h>
+#import "DetailsViewController.h"
 
-@interface ViewController ()
+NSString *const kDetailsSegue = @"DetailsSegue";
+
+@interface ViewController () <VideoTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) NSMutableArray *videos;
@@ -21,17 +24,30 @@
 
 @implementation ViewController
 
+-(void)handlePressedOpenVideoFromCell:(UITableViewCell *)cell
+{
+    NSInteger index = [self.tableView indexPathForCell:cell].row;
+    Video *video = self.videos[index];
+    [self performSegueWithIdentifier:kDetailsSegue sender:video];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:kDetailsSegue]){
+        DetailsViewController *vc = segue.destinationViewController;
+        if([sender isKindOfClass: [Video class]] && [vc isKindOfClass:[DetailsViewController class]]){
+            vc.video = (Video *)sender;
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.videos = [NSMutableArray new];
-    
     [self fetchVideos];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self.tableView reloadData];
 }
 
@@ -104,6 +120,7 @@
     
     VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell" forIndexPath:indexPath];
     cell.layer.shouldRasterize = YES;
+    cell.delegate = self;
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     
     Video *video = [self.videos objectAtIndex:indexPath.row];
