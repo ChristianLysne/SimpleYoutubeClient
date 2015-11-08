@@ -12,8 +12,9 @@
 #import <PINRemoteImage/UIImageView+PINRemoteImage.h>
 #import <XCDYouTubeKit/XCDYouTubeKit.h>
 #import "DetailsViewController.h"
+#import "RestHandler.h"
 
-NSString *const kDetailsSegue = @"DetailsSegue";
+NSString * const kDetailsSegue = @"DetailsSegue";
 
 @interface ViewController () <VideoTableViewCellDelegate>
 
@@ -24,34 +25,7 @@ NSString *const kDetailsSegue = @"DetailsSegue";
 
 @implementation ViewController
 
--(void)handlePressedOpenDetailsFromCell:(UITableViewCell *)cell
-{
-    [self performSegueWithIdentifier:kDetailsSegue sender:[self videoForCell:cell]];
-}
-
--(Video *)videoForCell:(UITableViewCell *)cell {
-    NSInteger index = [self.tableView indexPathForCell:cell].row;
-    return self.videos[index];
-}
-
--(void)handlePressedOpenVideoFromCell:(UITableViewCell *)cell
-{
-    XCDYouTubeVideoPlayerViewController *videoPlayerViewController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:[self videoForCell:cell].videoID];
-    
-    [self presentViewController:videoPlayerViewController animated:YES completion:^{
-        [videoPlayerViewController.moviePlayer play];
-    }];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:kDetailsSegue]){
-        DetailsViewController *vc = segue.destinationViewController;
-        if([sender isKindOfClass: [Video class]] && [vc isKindOfClass:[DetailsViewController class]]){
-            vc.video = (Video *)sender;
-        }
-    }
-}
-
+#pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.videos = [NSMutableArray new];
@@ -72,50 +46,20 @@ NSString *const kDetailsSegue = @"DetailsSegue";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Fetching
 - (void)fetchVideos {
     
-    // Set up your URL
-    NSString *youtubeEndpoint = @"https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=50&regionCode=NO&videoCategoryId=23&key=AIzaSyDlLkNDgDjQWPJ-dUE840goio7Mki0rtnM";
-    NSURL *url = [[NSURL alloc] initWithString:youtubeEndpoint];
-    
-    // Create your request
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    // Send the request asynchronously
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    [[RestHandler sharedInstance] fetchVideos:^(NSArray *videos) {
         
-        // Callback, parse the data and check for errors
-        if (data && !connectionError) {
-            NSError *jsonError;
-            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-            
-            if (!jsonError) {
-//                NSLog(@"Response from YouTube: %@", jsonResult);
-                
-                NSArray *items = [jsonResult objectForKey:@"items"];
-                
-                for (NSDictionary *dic in items) {
-                    
-                    Video *video = [Video new];
-                    video.videoID = [dic objectForKey:@"id"];
-                    video.title = [dic valueForKeyPath:@"snippet.title"];
-                    video.videoDescription = [dic valueForKeyPath:@"snippet.description"];
-                    video.imageURL = [NSURL URLWithString:[dic valueForKeyPath:@"snippet.thumbnails.high.url"]];
-                    
-                    [self.videos addObject:video];
-                }
-                
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-                
-            } else {
-                NSLog(@"Error: %@", jsonError);
-            }
-        } else {
-            NSLog(@"Connection error: %@", connectionError);
-        }
+        self.videos = [NSMutableArray arrayWithArray:videos];
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"Failed to get videos: %@", error);
     }];
 }
 
+#pragma mark - Tableview Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -125,15 +69,15 @@ NSString *const kDetailsSegue = @"DetailsSegue";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CGRectGetHeight(self.view.frame)/3;
+    return MAX(200, CGRectGetHeight(self.view.frame)/3);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell" forIndexPath:indexPath];
     cell.layer.shouldRasterize = YES;
-    cell.delegate = self;
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    cell.delegate = self;
     
     Video *video = [self.videos objectAtIndex:indexPath.row];
     [cell.mainImageView pin_setImageFromURL:video.imageURL];
@@ -155,8 +99,39 @@ NSString *const kDetailsSegue = @"DetailsSegue";
     
 }
 
+#pragma mark - Rotation
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [self.tableView reloadData];
+}
+
+#pragma mark - VideoCell Delegate
+- (void)handlePressedOpenDetailsFromCell:(UITableViewCell *)cell {
+    [self performSegueWithIdentifier:kDetailsSegue sender:[self videoForCell:cell]];
+}
+
+
+- (void)handlePressedOpenVideoFromCell:(UITableViewCell *)cell {
+    XCDYouTubeVideoPlayerViewController *videoPlayerViewController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:[self videoForCell:cell].videoID];
+    
+    [self presentViewController:videoPlayerViewController animated:YES completion:^{
+        [videoPlayerViewController.moviePlayer play];
+    }];
+}
+
+#pragma mark - Segue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:kDetailsSegue]){
+        DetailsViewController *vc = segue.destinationViewController;
+        if([sender isKindOfClass: [Video class]] && [vc isKindOfClass:[DetailsViewController class]]){
+            vc.video = (Video *)sender;
+        }
+    }
+}
+
+#pragma mark - Utils
+- (Video *)videoForCell:(UITableViewCell *)cell {
+    NSInteger index = [self.tableView indexPathForCell:cell].row;
+    return self.videos[index];
 }
 
 @end

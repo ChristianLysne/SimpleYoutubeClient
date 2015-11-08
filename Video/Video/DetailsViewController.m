@@ -8,10 +8,12 @@
 
 #import "DetailsViewController.h"
 #import "Video.h"
+#import <PINRemoteImage/UIImageView+PINRemoteImage.h>
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 
@@ -19,23 +21,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self populateVideoInfo];
-    // Do any additional setup after loading the view.
 }
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 }
 
--(void)populateVideoInfo{
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
+- (void)populateVideoInfo{
     self.titleLabel.text = self.video.title;
     self.detailsTextView.text = self.video.videoDescription;
+    [self.imageView pin_setImageFromURL:self.video.imageURL];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RoundedCornerImageView.h"
 
 @protocol VideoTableViewCellDelegate <NSObject>
 
@@ -18,7 +19,7 @@
 @interface VideoTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
+@property (weak, nonatomic) IBOutlet RoundedCornerImageView *mainImageView;
 @property(nonatomic,weak)id <VideoTableViewCellDelegate> delegate;
 
 @end
