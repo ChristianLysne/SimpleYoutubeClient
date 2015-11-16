@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6B02A37EE5DE3D8293AE94D7 /* libPods-Video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0191589C155352FF00EEF3 /* libPods-Video.a */; };
-		A98294471BEA98F400561AAE /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98294461BEA98F400561AAE /* DetailsViewController.m */; };
-		AA1C01881BEFFEE00006726A /* RestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1C01871BEFFEE00006726A /* RestHandler.m */; settings = {ASSET_TAGS = (); }; };
-		AA1C018B1BF002950006726A /* RoundedCornerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1C018A1BF002950006726A /* RoundedCornerImageView.m */; settings = {ASSET_TAGS = (); }; };
-		AAAC80101B97789B00CDD7FC /* VideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAC800F1B97789B00CDD7FC /* VideoTableViewCell.m */; };
+		AA1C01881BEFFEE00006726A /* RestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1C01871BEFFEE00006726A /* RestHandler.m */; };
 		AAAC80131B977B4E00CDD7FC /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAC80121B977B4E00CDD7FC /* Video.m */; };
 		AAD50B411B964EE600F5338E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD50B401B964EE600F5338E /* main.m */; };
 		AAD50B441B964EE600F5338E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD50B431B964EE600F5338E /* AppDelegate.m */; };
@@ -34,14 +31,8 @@
 
 /* Begin PBXFileReference section */
 		59156AC4C8A77B01BA93AACE /* Pods-Video.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Video/Pods-Video.debug.xcconfig"; sourceTree = "<group>"; };
-		A98294451BEA98F400561AAE /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
-		A98294461BEA98F400561AAE /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		AA1C01861BEFFEE00006726A /* RestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestHandler.h; sourceTree = "<group>"; };
 		AA1C01871BEFFEE00006726A /* RestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestHandler.m; sourceTree = "<group>"; };
-		AA1C01891BF002950006726A /* RoundedCornerImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundedCornerImageView.h; sourceTree = "<group>"; };
-		AA1C018A1BF002950006726A /* RoundedCornerImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundedCornerImageView.m; sourceTree = "<group>"; };
-		AAAC800E1B97789B00CDD7FC /* VideoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoTableViewCell.h; sourceTree = "<group>"; };
-		AAAC800F1B97789B00CDD7FC /* VideoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoTableViewCell.m; sourceTree = "<group>"; };
 		AAAC80111B977B4E00CDD7FC /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		AAAC80121B977B4E00CDD7FC /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		AAD50B3B1B964EE600F5338E /* Video.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Video.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,14 +100,8 @@
 				AA1C01871BEFFEE00006726A /* RestHandler.m */,
 				AAAC80111B977B4E00CDD7FC /* Video.h */,
 				AAAC80121B977B4E00CDD7FC /* Video.m */,
-				AA1C01891BF002950006726A /* RoundedCornerImageView.h */,
-				AA1C018A1BF002950006726A /* RoundedCornerImageView.m */,
-				AAAC800E1B97789B00CDD7FC /* VideoTableViewCell.h */,
-				AAAC800F1B97789B00CDD7FC /* VideoTableViewCell.m */,
 				AAD50B451B964EE600F5338E /* ViewController.h */,
 				AAD50B461B964EE600F5338E /* ViewController.m */,
-				A98294451BEA98F400561AAE /* DetailsViewController.h */,
-				A98294461BEA98F400561AAE /* DetailsViewController.m */,
 				AAD50B481B964EE600F5338E /* Main.storyboard */,
 				AAD50B4B1B964EE600F5338E /* Images.xcassets */,
 				AAD50B4D1B964EE600F5338E /* LaunchScreen.xib */,
@@ -304,10 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAD50B471B964EE600F5338E /* ViewController.m in Sources */,
-				AAAC80101B97789B00CDD7FC /* VideoTableViewCell.m in Sources */,
 				AAD50B441B964EE600F5338E /* AppDelegate.m in Sources */,
-				AA1C018B1BF002950006726A /* RoundedCornerImageView.m in Sources */,
-				A98294471BEA98F400561AAE /* DetailsViewController.m in Sources */,
 				AAAC80131B977B4E00CDD7FC /* Video.m in Sources */,
 				AA1C01881BEFFEE00006726A /* RestHandler.m in Sources */,
 				AAD50B411B964EE600F5338E /* main.m in Sources */,
